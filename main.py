@@ -1,21 +1,36 @@
 import os
 from telegram import Update
-from telegram.ext import Application, CommandHandler, ContextTypes
+from telegram.ext import (
+    Application,
+    CommandHandler,
+    MessageHandler,
+    ContextTypes,
+    filters,
+)
 
 TOKEN = os.getenv("BOT_TOKEN")
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(
-        "أهلاً بك، البوت شغال بنجاح 🚀"
+        "أرسل لي ملف PDF 📚"
     )
 
-def main():
-    app = Application.builder().token(TOKEN).build()
+async def handle_pdf(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    document = update.message.document
 
-    app.add_handler(CommandHandler("start", start))
+    if not document.file_name.lower().endswith(".pdf"):
+        await update.message.reply_text("أرسل ملف PDF فقط")
+        return
 
-    print("Bot Started...")
-    app.run_polling()
+    await update.message.reply_text(
+        f"تم استلام الملف: {document.file_name} ✅"
+    )
 
-if __name__ == "__main__":
-    main()
+app = Application.builder().token(TOKEN).build()
+
+app.add_handler(CommandHandler("start", start))
+app.add_handler(
+    MessageHandler(filters.Document.PDF, handle_pdf)
+)
+
+app.run_polling()
