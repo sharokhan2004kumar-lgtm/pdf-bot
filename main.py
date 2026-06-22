@@ -30,7 +30,7 @@ app = Application.builder().token(TOKEN).build()
 
 app.add_handler(CommandHandler("start", start))
 app.add_handler(
-    MessageHandler(filters.Document.PDF, handle_pdf)
+    MessageHandler(filters.Document.ALL, handle_pdf)
 )
 
 app.run_polling()
