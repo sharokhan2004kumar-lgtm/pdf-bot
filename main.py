@@ -20,10 +20,15 @@ async def handle_pdf(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     document = update.message.document
 
-    if document:
-        await update.message.reply_text(
-            f"اسم الملف: {document.file_name}"
-        )
+await update.message.reply_text("⏳ جاري تحميل الملف...")
+
+file = await context.bot.get_file(document.file_id)
+
+await file.download_to_drive("book.pdf")
+
+await update.message.reply_text(
+    f"✅ تم تحميل الملف: {document.file_name}"
+)
 
 app = Application.builder().token(TOKEN).build()
 
