@@ -16,19 +16,19 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     )
 
 async def handle_pdf(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    await update.message.reply_text("وصلتني رسالة 📩")
+    await update.message.reply_text("📩 وصلتني رسالة")
 
     document = update.message.document
 
-await update.message.reply_text("⏳ جاري تحميل الملف...")
+    await update.message.reply_text("⏳ جاري تحميل الملف...")
 
-file = await context.bot.get_file(document.file_id)
+    file = await context.bot.get_file(document.file_id)
 
-await file.download_to_drive("book.pdf")
+    await file.download_to_drive("book.pdf")
 
-await update.message.reply_text(
-    f"✅ تم تحميل الملف: {document.file_name}"
-)
+    await update.message.reply_text(
+        f"✅ تم تحميل الملف: {document.file_name}"
+    )
 
 app = Application.builder().token(TOKEN).build()
 
