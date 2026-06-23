@@ -49,10 +49,11 @@ communicate = edge_tts.Communicate(
 )
 
 await communicate.save("book.mp3")
-    await update.message.reply_audio(
-        audio=open("book.mp3", "rb"),
-        title="الكتاب الصوتي"
-    )
+
+await update.message.reply_audio(
+    audio=open("book.mp3", "rb"),
+    title="الكتاب الصوتي"
+)
 
 app = Application.builder().token(TOKEN).build()
 
