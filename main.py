@@ -41,11 +41,14 @@ async def handle_pdf(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     await update.message.reply_text("🎤 جاري تحويل النص إلى صوت...")
 
-    from gtts import gTTS
+    import edge_tts
 
-    tts = gTTS(text=text[:5000], lang="ar")
-    tts.save("book.mp3")
+communicate = edge_tts.Communicate(
+    text[:5000],
+    voice="ar-EG-ShakirNeural"
+)
 
+await communicate.save("book.mp3")
     await update.message.reply_audio(
         audio=open("book.mp3", "rb"),
         title="الكتاب الصوتي"
